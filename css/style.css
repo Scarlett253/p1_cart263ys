@@ -1,0 +1,46 @@
+/* reset page */
+body {
+  margin: 0;
+  background-color: black;
+  color: white;
+  font-family: Arial, sans-serif;
+}
+
+/* title screen layout */
+#start-screen {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+/* glowing title */
+#game-title {
+  font-size: 94px;
+  padding-bottom: 100px;
+  text-shadow:
+    0 0 10px white,
+    0 0 20px white;
+}
+
+/* glowing instructions */
+#instructions {
+  text-shadow: 0 0 6px white;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  line-height: 1.6;
+}
+
+/* glowing credits */
+#credits {
+  position: absolute;
+  bottom: 20px;
+  font-size: 14px;
+  opacity: 0.8;
+}
+
+#start-btn {
+  margin-top: 10px;
+}
