@@ -15,12 +15,12 @@ let restartButton = document.getElementById("restart-button");
 //Players
 let p1 = {
   x: 100,
-  y: 100
+  y: 100,
 };
 
 let p2 = {
   x: 500,
-  y: 300
+  y: 300,
 };
 
 let speed = 10;
@@ -39,9 +39,8 @@ startBtn.addEventListener("click", function () {
   //ui display
   ui.style.display = "block";
 
-  //start the game 
+  //start the game
   startGame();
-
 });
 
 /**Start game function */

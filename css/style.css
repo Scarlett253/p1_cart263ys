@@ -54,7 +54,21 @@ body {
   margin-top: 10px;
 }
 
-#game-container,
-#ui {
+#game-container {
+  position: relative;
   display: none;
+}
+
+#ui {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  display: none;
+}
+
+/*  seperate later */
+#avatar-player,
+#avatar-hidden,
+#bg-video {
+  position: absolute;
 }
