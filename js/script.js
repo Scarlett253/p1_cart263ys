@@ -9,7 +9,7 @@ let player = document.getElementById("avatar-player");
 let hidden = document.getElementById("avatar-hidden");
 let message = document.getElementById("message");
 let timerDisplay = document.getElementById("timer");
-let restartButton = document.getElementById("restart-button");
+let restartButton = document.getElementById("restart-btn");
 
 /**Game variables*/
 //Players
@@ -62,7 +62,7 @@ function updatePositions() {
 
 /**Movement controls */
 document.addEventListener("keydown", function (e) {
-  if (gameover) return;
+  if (gameOver) return;
 
   //Player 1 W A S D
   if (e.key === "w" || e.key === "W") p1.y -= speed;
