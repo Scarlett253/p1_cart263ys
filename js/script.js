@@ -112,3 +112,25 @@ function startTimer() {
 }
 
 /**Win or Lose*/
+
+//Win
+function winGame() {
+  gameOver = true;
+  hidden.style.opacity = 1;
+  message.textContent = "I see you.";
+  restartButton.style.display = "inline";
+  clearInterval(timer);
+}
+
+//Lose
+function loseGame() {
+  gameOver = true;
+  message.textContent = "You never found me.";
+  restartButton.style.display = "inline";
+  clearInterval(timer);
+}
+
+/**Restart */
+restartButton.addEventListener("click", function () {
+  location.reload();
+});
