@@ -80,7 +80,7 @@ document.addEventListener("keydown", function (e) {
   checkDistance();
 });
 
-//Check distance
+/**Distance setup*/
 function checkDistance() {
   let dx = p1.x - p2.x;
   let dy = p1.y - p2.y;
@@ -96,3 +96,19 @@ function checkDistance() {
     winGame();
   }
 }
+
+/**Timer setup*/
+function startTimer() {
+  timer = setInterval(function () {
+    if (gameOver) return;
+
+    timeLeft--;
+    timerDisplay.textContent = "Time: " + timeLeft;
+
+    if (timeLeft <= 0) {
+      loseGame();
+    }
+  }, 1000);
+}
+
+/**Win or Lose*/
