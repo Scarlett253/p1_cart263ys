@@ -54,7 +54,44 @@ body {
   margin-top: 10px;
 }
 
-#game-container,
+#game-container {
+  position: relative;
+  display: none;
+}
+
 #ui {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: none;
+}
+
+/* Message in the top center */
+#message {
+  position: absolute;
+  top: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-shadow: 0 0 10px white;
+  font-size: 22px;
+}
+
+#timer {
+  position: absolute;
+  top: 30px;
+  right: 40px;
+  text-shadow: 0 0 8px white;
+  font-size: 18px;
+}
+
+/*  seperate later */
+#avatar-player,
+#avatar-hidden,
+#bg-video {
+  position: absolute;
+}
+
+#restart-btn {
   display: none;
 }

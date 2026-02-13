@@ -9,18 +9,18 @@ let player = document.getElementById("avatar-player");
 let hidden = document.getElementById("avatar-hidden");
 let message = document.getElementById("message");
 let timerDisplay = document.getElementById("timer");
-let restartButton = document.getElementById("restart-button");
+let restartButton = document.getElementById("restart-btn");
 
 /**Game variables*/
 //Players
 let p1 = {
   x: 100,
-  y: 100
+  y: 100,
 };
 
 let p2 = {
   x: 500,
-  y: 300
+  y: 300,
 };
 
 let speed = 10;
@@ -39,9 +39,8 @@ startBtn.addEventListener("click", function () {
   //ui display
   ui.style.display = "block";
 
-  //start the game 
+  //start the game
   startGame();
-
 });
 
 /**Start game function */
@@ -63,7 +62,7 @@ function updatePositions() {
 
 /**Movement controls */
 document.addEventListener("keydown", function (e) {
-  if (gameover) return;
+  if (gameOver) return;
 
   //Player 1 W A S D
   if (e.key === "w" || e.key === "W") p1.y -= speed;
