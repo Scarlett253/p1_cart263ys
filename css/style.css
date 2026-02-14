@@ -56,7 +56,8 @@ body {
 
 #game-container {
   position: relative;
-  display: none;
+  width: 100vw;
+  height: 100vh;
 }
 
 #ui {
@@ -85,13 +86,28 @@ body {
   font-size: 18px;
 }
 
-/*  seperate later */
-#avatar-player,
-#avatar-hidden,
 #bg-video {
   position: absolute;
 }
 
-#restart-btn {
+/*  seperate later */
+#avatar-player,
+#avatar-hidden {
+  width: 40px;
+  height: 40px;
+  position: absolute;
+}
+
+#avatar-player {
+  background: cyan;
+}
+
+#avatar-hidden {
+  background: white;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+#restart-button {
   display: none;
 }
