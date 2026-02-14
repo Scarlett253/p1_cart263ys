@@ -78,3 +78,58 @@ document.addEventListener("keydown", function (e) {
   updatePositions();
   checkDistance();
 });
+
+/**Distance setup*/
+function checkDistance() {
+  let dx = p1.x - p2.x;
+  let dy = p1.y - p2.y;
+  let distance = Math.sqrt(dx * dx + dy * dy);
+
+  //reveal player 2
+  if (distance < 250) {
+    hidden.style.opacity = 1 - distance / 250;
+  }
+
+  //win
+  if (distance < 60) {
+    winGame();
+  }
+}
+
+/**Timer setup*/
+function startTimer() {
+  timer = setInterval(function () {
+    if (gameOver) return;
+
+    timeLeft--;
+    timerDisplay.textContent = "Time: " + timeLeft;
+
+    if (timeLeft <= 0) {
+      loseGame();
+    }
+  }, 1000);
+}
+
+/**Win or Lose*/
+
+//Win
+function winGame() {
+  gameOver = true;
+  hidden.style.opacity = 1;
+  message.textContent = "I see you.";
+  restartButton.style.display = "inline";
+  clearInterval(timer);
+}
+
+//Lose
+function loseGame() {
+  gameOver = true;
+  message.textContent = "You never found me.";
+  restartButton.style.display = "inline";
+  clearInterval(timer);
+}
+
+/**Restart */
+restartButton.addEventListener("click", function () {
+  location.reload();
+});
