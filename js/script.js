@@ -30,16 +30,15 @@ let gameOver = false;
 
 // when start button is clicked
 startBtn.addEventListener("click", function () {
-  // hide start screen
   startScreen.style.display = "none";
-
-  // show game
   gameContainer.style.display = "block";
-
-  //ui display
   ui.style.display = "block";
 
-  //start the game
+  message.style.opacity = "0";
+  setTimeout(function () {
+    message.style.opacity = "1";
+  }, 50);
+
   startGame();
 });
 

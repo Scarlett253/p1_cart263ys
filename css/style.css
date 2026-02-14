@@ -67,14 +67,24 @@ body {
   display: none;
 }
 
-/* Message in the top center */
 #message {
   position: absolute;
   top: 30px;
   left: 50%;
   transform: translateX(-50%);
-  text-shadow: 0 0 10px white;
-  font-size: 22px;
+
+  font-size: 48px;
+  letter-spacing: 3px;
+  font-weight: 300;
+
+  text-shadow:
+    0 0 5px rgb(255, 255, 255),
+    0 0 15px white,
+    0 0 30px rgba(255, 255, 255, 0.395);
+  animation: float 3.5s infinite alternate ease-in-out;
+
+  opacity: 0;
+  transition: opacity 2s ease;
 }
 
 #timer {
@@ -94,4 +104,13 @@ body {
 
 #restart-btn {
   display: none;
+}
+
+@keyframes float {
+  from {
+    transform: translate(-50%, 20px);
+  }
+  to {
+    transform: translate(-50%, -40px);
+  }
 }
