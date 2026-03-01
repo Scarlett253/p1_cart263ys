@@ -59,6 +59,12 @@ function updatePositions() {
   hidden.style.top = p2.y + "px";
 }
 
+function clampPlayer(p) {
+  const size = 40; // size of the player avatar
+  p.x = Math.max(0, Math.min(window.innerWidth - size, p.x));
+  p.y = Math.max(0, Math.min(window.innerHeight - size, p.y));
+}
+
 /**Movement controls */
 document.addEventListener("keydown", function (e) {
   if (gameOver) return;
@@ -75,6 +81,8 @@ document.addEventListener("keydown", function (e) {
   if (e.key === "ArrowLeft") p2.x -= speed;
   if (e.key === "ArrowRight") p2.x += speed;
 
+  clampPlayer(p1);
+  clampPlayer(p2);
   updatePositions();
   checkDistance();
 });
@@ -88,6 +96,8 @@ function checkDistance() {
   //reveal player 2
   if (distance < 250) {
     hidden.style.opacity = 1 - distance / 250;
+  } else {
+    hidden.style.opacity = 0;
   }
 
   //win
