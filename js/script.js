@@ -27,6 +27,7 @@ let speed = 10;
 let timeLeft = 60;
 let timer;
 let gameOver = false;
+let handleKeyDown;
 
 // when start button is clicked
 startBtn.addEventListener("click", function () {
@@ -47,9 +48,35 @@ startBtn.addEventListener("click", function () {
 function startGame() {
   updatePositions();
   startTimer();
+
+  handleKeyDown = function (e) {
+    if (gameOver) return;
+
+    /**Movement controls */
+
+    //Player 1 W A S D
+    if (e.key === "w" || e.key === "W") p1.y -= speed;
+    if (e.key === "s" || e.key === "S") p1.y += speed;
+    if (e.key === "a" || e.key === "A") p1.x -= speed;
+    if (e.key === "d" || e.key === "D") p1.x += speed;
+
+    //Player 2 arrows
+    if (e.key === "ArrowUp") p2.y -= speed;
+    if (e.key === "ArrowDown") p2.y += speed;
+    if (e.key === "ArrowLeft") p2.x -= speed;
+    if (e.key === "ArrowRight") p2.x += speed;
+
+    clampPlayer(p1);
+    clampPlayer(p2);
+    updatePositions();
+    checkDistance();
+  };
+
+  document.addEventListener("keydown", handleKeyDown);
 }
 
-//positions setup
+
+/** positions setup */
 function updatePositions() {
   //player1
   player.style.left = p1.x + "px";
@@ -65,27 +92,7 @@ function clampPlayer(p) {
   p.y = Math.max(0, Math.min(window.innerHeight - size, p.y));
 }
 
-/**Movement controls */
-document.addEventListener("keydown", function (e) {
-  if (gameOver) return;
 
-  //Player 1 W A S D
-  if (e.key === "w" || e.key === "W") p1.y -= speed;
-  if (e.key === "s" || e.key === "S") p1.y += speed;
-  if (e.key === "a" || e.key === "A") p1.x -= speed;
-  if (e.key === "d" || e.key === "D") p1.x += speed;
-
-  //Player 2 arrows
-  if (e.key === "ArrowUp") p2.y -= speed;
-  if (e.key === "ArrowDown") p2.y += speed;
-  if (e.key === "ArrowLeft") p2.x -= speed;
-  if (e.key === "ArrowRight") p2.x += speed;
-
-  clampPlayer(p1);
-  clampPlayer(p2);
-  updatePositions();
-  checkDistance();
-});
 
 /**Distance setup*/
 function checkDistance() {
@@ -129,6 +136,8 @@ function winGame() {
   message.textContent = "I see you.";
   restartButton.style.display = "inline";
   clearInterval(timer);
+
+  document.removeEventListener("keydown", handleKeyDown);
 }
 
 //Lose
@@ -137,6 +146,8 @@ function loseGame() {
   message.textContent = "You never found me.";
   restartButton.style.display = "inline";
   clearInterval(timer);
+
+  document.removeEventListener("keydown", handleKeyDown);
 }
 
 /**Restart */
