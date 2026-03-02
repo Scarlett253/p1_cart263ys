@@ -121,6 +121,10 @@ function startTimer() {
     timeLeft--;
     timerDisplay.textContent = "Time: " + timeLeft;
 
+    if (timeLeft <= 10) {
+      timerDisplay.style.color = "red";
+    }
+
     if (timeLeft <= 0) {
       loseGame();
     }
