@@ -1,34 +1,30 @@
-/**Elements from the DOM*/
+/** DOM */
 let startBtn = document.getElementById("start-btn");
 let startScreen = document.getElementById("start-screen");
 let gameContainer = document.getElementById("game-container");
 let ui = document.getElementById("ui");
 
-/**Game elements*/
 let player = document.getElementById("avatar-player");
 let hidden = document.getElementById("avatar-hidden");
+
 let message = document.getElementById("message");
 let timerDisplay = document.getElementById("timer");
 let restartButton = document.getElementById("restart-btn");
 
-/**Game variables*/
-//Players
-let p1 = {
-  x: 100,
-  y: 100,
-};
-
-let p2 = {
-  x: 500,
-  y: 300,
-};
+/** Game variables */
+let p1 = { x: 100, y: 100 };
+let p2 = { x: 500, y: 300 };
 
 let speed = 10;
 let timeLeft = 60;
 let timer;
 let gameOver = false;
+let movedYet = false;
 
-// when start button is clicked
+const SIZE_W = 40;
+const SIZE_H = 55;
+
+/** Start */
 startBtn.addEventListener("click", function () {
   startScreen.style.display = "none";
   gameContainer.style.display = "block";
@@ -42,40 +38,44 @@ startBtn.addEventListener("click", function () {
   startGame();
 });
 
-/**Start game function */
-
 function startGame() {
+  gameOver = false;
+  movedYet = false;
+
+  // hide player 2 at the very start
+  hidden.style.opacity = 0;
+
   updatePositions();
   startTimer();
 }
 
-//positions setup
+/** Position + bounds */
 function updatePositions() {
-  //player1
   player.style.left = p1.x + "px";
   player.style.top = p1.y + "px";
-  //player2
+
   hidden.style.left = p2.x + "px";
   hidden.style.top = p2.y + "px";
 }
 
 function clampPlayer(p) {
-  const size = 40; // size of the player avatar
-  p.x = Math.max(0, Math.min(window.innerWidth - size, p.x));
-  p.y = Math.max(0, Math.min(window.innerHeight - size, p.y));
+  p.x = Math.max(0, Math.min(window.innerWidth - SIZE_W, p.x));
+  p.y = Math.max(0, Math.min(window.innerHeight - SIZE_H, p.y));
 }
 
-/**Movement controls */
+/** Movement */
 document.addEventListener("keydown", function (e) {
   if (gameOver) return;
 
-  //Player 1 W A S D
+  movedYet = true;
+
+  // Player 1: WASD
   if (e.key === "w" || e.key === "W") p1.y -= speed;
   if (e.key === "s" || e.key === "S") p1.y += speed;
   if (e.key === "a" || e.key === "A") p1.x -= speed;
   if (e.key === "d" || e.key === "D") p1.x += speed;
 
-  //Player 2 arrows
+  // Player 2: arrows
   if (e.key === "ArrowUp") p2.y -= speed;
   if (e.key === "ArrowDown") p2.y += speed;
   if (e.key === "ArrowLeft") p2.x -= speed;
@@ -83,46 +83,63 @@ document.addEventListener("keydown", function (e) {
 
   clampPlayer(p1);
   clampPlayer(p2);
+
   updatePositions();
   checkDistance();
 });
 
-/**Distance setup*/
+/** Distance + reveal + mood */
 function checkDistance() {
   let dx = p1.x - p2.x;
   let dy = p1.y - p2.y;
   let distance = Math.sqrt(dx * dx + dy * dy);
 
-  //reveal player 2
-  if (distance < 250) {
+  // reveal player 2 only after any movement
+  if (!movedYet) {
+    hidden.style.opacity = 0;
+  } else if (distance < 250) {
     hidden.style.opacity = 1 - distance / 250;
   } else {
     hidden.style.opacity = 0;
   }
 
-  //win
-  if (distance < 60) {
-    winGame();
+  // mood: met when close
+  if (distance < 120) {
+    player.classList.add("met");
+    player.classList.remove("lost");
+
+    hidden.classList.add("met");
+    hidden.classList.remove("lost");
+  } else {
+    player.classList.add("lost");
+    player.classList.remove("met");
+
+    hidden.classList.add("lost");
+    hidden.classList.remove("met");
   }
+
+  // win
+  if (distance < 60) winGame();
 }
 
-/**Timer setup*/
+/** Timer */
 function startTimer() {
+  clearInterval(timer);
+
+  timeLeft = 60;
+  timerDisplay.textContent = "Time: " + timeLeft;
+
   timer = setInterval(function () {
     if (gameOver) return;
 
     timeLeft--;
     timerDisplay.textContent = "Time: " + timeLeft;
 
-    if (timeLeft <= 0) {
-      loseGame();
-    }
+    if (timeLeft <= 0) loseGame();
   }, 1000);
 }
 
-/**Win or Lose*/
-
-//Win
+/** End states */
 function winGame() {
   gameOver = true;
   hidden.style.opacity = 1;
@@ -131,7 +148,6 @@ function winGame() {
   clearInterval(timer);
 }
 
-//Lose
 function loseGame() {
   gameOver = true;
   message.textContent = "You never found me.";
@@ -139,7 +155,7 @@ function loseGame() {
   clearInterval(timer);
 }
 
-/**Restart */
+/** Restart */
 restartButton.addEventListener("click", function () {
   location.reload();
 });

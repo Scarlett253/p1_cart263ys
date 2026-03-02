@@ -12,14 +12,14 @@
     </p>
 
     <button id="start-btn">Start</button>
-
     <p id="credits">Made by Yelena & Scarlett</p>
   </div>
 
   <!-- Game Area -->
   <div id="game-container">
-    <div id="avatar-player"></div>
-    <div id="avatar-hidden"></div>
+    <div id="avatar-player" class="player avatar1 lost"></div>
+    <div id="avatar-hidden" class="player avatar2 lost"></div>
+
     <video id="game-bg-video" autoplay loop muted playsinline>
       <source src="images/GameBackground.mp4" type="video/mp4" />
     </video>
@@ -31,5 +31,26 @@
     <p id="timer">Time: 60</p>
     <button id="restart-btn">Start again</button>
   </div>
+
+  <!-- Wavy filter (needed for dress wave) -->
+  <svg width="0" height="0" style="position: absolute">
+    <filter id="wavy">
+      <feTurbulence
+        type="fractalNoise"
+        baseFrequency="0.02"
+        numOctaves="2"
+        seed="2"
+      >
+        <animate
+          attributeName="baseFrequency"
+          dur="2.5s"
+          values="0.02;0.03;0.02"
+          repeatCount="indefinite"
+        ></animate>
+      </feTurbulence>
+      <feDisplacementMap in="SourceGraphic" scale="18"></feDisplacementMap>
+    </filter>
+  </svg>
+
   <script src="js/script.js"></script>
 </body>

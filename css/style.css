@@ -109,33 +109,46 @@ body {
   z-index: -1;
 }
 
-/*  seperate later */
+/* =======================
+   AVATARS (players)
+   ======================= */
+
+/* base size/position for both */
 #avatar-player,
 #avatar-hidden {
-  width: 40px;
-  height: 40px;
   position: absolute;
+
+  /* a little taller looks more ghost-like */
+  width: 40px;
+  height: 55px;
 }
 
-#avatar-player {
-  background: cyan;
-}
-
+/* player 2 starts hidden (your JS fades it in) */
 #avatar-hidden {
-  background: white;
   opacity: 0;
   transition: opacity 0.4s ease;
 }
 
-#restart-btn {
-  display: none;
+/* class that gives the float animation */
+.player {
+  /* no need to repeat position/size here since IDs already handle it */
+  animation: floaty 2.2s ease-in-out infinite;
 }
 
-@keyframes float {
-  from {
-    transform: translate(-50%, 20px);
+/* float animation */
+@keyframes floaty {
+  0% {
+    transform: translateY(0);
   }
-  to {
-    transform: translate(-50%, -40px);
+  50% {
+    transform: translateY(-5px);
   }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+/* extra glow when met */
+.player.met {
+  filter: brightness(1.15) drop-shadow(0 0 16px rgba(255, 255, 255, 0.9));
 }
