@@ -48,34 +48,9 @@ function startGame() {
 
   updatePositions();
   startTimer();
-
-  handleKeyDown = function (e) {
-    if (gameOver) return;
-
-    /**Movement controls */
-
-    //Player 1 W A S D
-    if (e.key === "w" || e.key === "W") p1.y -= speed;
-    if (e.key === "s" || e.key === "S") p1.y += speed;
-    if (e.key === "a" || e.key === "A") p1.x -= speed;
-    if (e.key === "d" || e.key === "D") p1.x += speed;
-
-    //Player 2 arrows
-    if (e.key === "ArrowUp") p2.y -= speed;
-    if (e.key === "ArrowDown") p2.y += speed;
-    if (e.key === "ArrowLeft") p2.x -= speed;
-    if (e.key === "ArrowRight") p2.x += speed;
-
-    clampPlayer(p1);
-    clampPlayer(p2);
-    updatePositions();
-    checkDistance();
-  };
-
-  document.addEventListener("keydown", handleKeyDown);
 }
 
-/** positions setup */
+/** Position + bounds */
 function updatePositions() {
   player.style.left = p1.x + "px";
   player.style.top = p1.y + "px";
@@ -160,14 +135,6 @@ function startTimer() {
 
     timeLeft--;
     timerDisplay.textContent = "Time: " + timeLeft;
-
-    if (timeLeft <= 10) {
-      timerDisplay.style.color = "red";
-    }
-
-    if (timeLeft <= 10) {
-      timerDisplay.style.color = "red";
-    }
 
     if (timeLeft <= 0) loseGame();
   }, 1000);
