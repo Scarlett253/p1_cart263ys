@@ -3,6 +3,9 @@
 
   <!-- Title Screen -->
   <div id="start-screen">
+    <video id="start-bg-video" autoplay loop muted playsinline>
+      <source src="images/Background.mp4" type="video/mp4" />
+    </video>
     <h1 id="game-title">Can you see me?</h1>
 
     <p id="instructions">
@@ -31,26 +34,6 @@
     <p id="timer">Time: 60</p>
     <button id="restart-btn">Start again</button>
   </div>
-
-  <!-- Wavy filter (needed for dress wave) -->
-  <svg width="0" height="0" style="position: absolute">
-    <filter id="wavy">
-      <feTurbulence
-        type="fractalNoise"
-        baseFrequency="0.02"
-        numOctaves="2"
-        seed="2"
-      >
-        <animate
-          attributeName="baseFrequency"
-          dur="2.5s"
-          values="0.02;0.03;0.02"
-          repeatCount="indefinite"
-        ></animate>
-      </feTurbulence>
-      <feDisplacementMap in="SourceGraphic" scale="18"></feDisplacementMap>
-    </filter>
-  </svg>
 
   <script src="js/script.js"></script>
 </body>

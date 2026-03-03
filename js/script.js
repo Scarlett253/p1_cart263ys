@@ -4,8 +4,8 @@ let startScreen = document.getElementById("start-screen");
 let gameContainer = document.getElementById("game-container");
 let ui = document.getElementById("ui");
 
-let player = document.getElementById("avatar-player");
-let hidden = document.getElementById("avatar-hidden");
+let player = document.getElementById("avatar-player"); // Player 1 (white angel)
+let hidden = document.getElementById("avatar-hidden"); // Player 2 (cyan angel)
 
 let message = document.getElementById("message");
 let timerDisplay = document.getElementById("timer");
@@ -21,8 +21,9 @@ let timer;
 let gameOver = false;
 let movedYet = false;
 
-const SIZE_W = 40;
-const SIZE_H = 55;
+const SIZE_W = 380;
+const SIZE_H = 130;
+
 let handleKeyDown;
 
 /** Start */
@@ -64,8 +65,94 @@ function clampPlayer(p) {
   p.y = Math.max(0, Math.min(window.innerHeight - SIZE_H, p.y));
 }
 
-/** Movement */
-document.addEventListener("keydown", function (e) {
+/** Prevent overlap (so one angel doesn’t sit on top of the other) */
+function separateIfOverlapping() {
+  let overlapX = p1.x < p2.x + SIZE_W && p1.x + SIZE_W > p2.x;
+  let overlapY = p1.y < p2.y + SIZE_H && p1.y + SIZE_H > p2.y;
+
+  if (!(overlapX && overlapY)) return;
+
+  // push them apart based on their centers
+  let c1x = p1.x + SIZE_W / 2;
+  let c1y = p1.y + SIZE_H / 2;
+  let c2x = p2.x + SIZE_W / 2;
+  let c2y = p2.y + SIZE_H / 2;
+
+  let dx = c1x - c2x;
+  let dy = c1y - c2y;
+
+  // if perfectly stacked, pick a direction
+  if (dx === 0 && dy === 0) dx = 1;
+
+  // small push amount (feels less “bouncy”)
+  let push = 4;
+
+  if (Math.abs(dx) > Math.abs(dy)) {
+    // separate horizontally
+    if (dx > 0) {
+      p1.x += push;
+      p2.x -= push;
+    } else {
+      p1.x -= push;
+      p2.x += push;
+    }
+  } else {
+    // separate vertically
+    if (dy > 0) {
+      p1.y += push;
+      p2.y -= push;
+    } else {
+      p1.y -= push;
+      p2.y += push;
+    }
+  }
+
+  clampPlayer(p1);
+  clampPlayer(p2);
+}
+
+/** Distance + reveal + mood */
+function checkDistance() {
+  // use center-to-center distance (better for large sprites)
+  let p1cx = p1.x + SIZE_W / 2;
+  let p1cy = p1.y + SIZE_H / 2;
+  let p2cx = p2.x + SIZE_W / 2;
+  let p2cy = p2.y + SIZE_H / 2;
+
+  let dx = p1cx - p2cx;
+  let dy = p1cy - p2cy;
+  let distance = Math.sqrt(dx * dx + dy * dy);
+
+  // reveal player 2 only after any movement
+  if (!movedYet) {
+    hidden.style.opacity = 0;
+  } else if (distance < 300) {
+    hidden.style.opacity = 1 - distance / 300;
+  } else {
+    hidden.style.opacity = 0;
+  }
+
+  // mood: met when close
+  if (distance < 160) {
+    player.classList.add("met");
+    player.classList.remove("lost");
+
+    hidden.classList.add("met");
+    hidden.classList.remove("lost");
+  } else {
+    player.classList.add("lost");
+    player.classList.remove("met");
+
+    hidden.classList.add("lost");
+    hidden.classList.remove("met");
+  }
+
+  // win (tweak if needed)
+  if (distance < 95) winGame();
+}
+
+/** Movement (stored in a variable so removeEventListener actually works) */
+handleKeyDown = function (e) {
   if (gameOver) return;
 
   movedYet = true;
@@ -85,43 +172,14 @@ document.addEventListener("keydown", function (e) {
   clampPlayer(p1);
   clampPlayer(p2);
 
+  // stop overlap
+  separateIfOverlapping();
+
   updatePositions();
   checkDistance();
-});
+};
 
-/** Distance + reveal + mood */
-function checkDistance() {
-  let dx = p1.x - p2.x;
-  let dy = p1.y - p2.y;
-  let distance = Math.sqrt(dx * dx + dy * dy);
-
-  // reveal player 2 only after any movement
-  if (!movedYet) {
-    hidden.style.opacity = 0;
-  } else if (distance < 250) {
-    hidden.style.opacity = 1 - distance / 250;
-  } else {
-    hidden.style.opacity = 0;
-  }
-
-  // mood: met when close
-  if (distance < 120) {
-    player.classList.add("met");
-    player.classList.remove("lost");
-
-    hidden.classList.add("met");
-    hidden.classList.remove("lost");
-  } else {
-    player.classList.add("lost");
-    player.classList.remove("met");
-
-    hidden.classList.add("lost");
-    hidden.classList.remove("met");
-  }
-
-  // win
-  if (distance < 60) winGame();
-}
+document.addEventListener("keydown", handleKeyDown);
 
 /** Timer */
 function startTimer() {

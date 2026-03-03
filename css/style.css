@@ -1,4 +1,3 @@
-/* reset page */
 body {
   overflow: hidden;
   margin: 0;
@@ -9,20 +8,25 @@ body {
 
 /* title screen layout */
 #start-screen {
+  position: relative;
+  width: 100vw;
   height: 100vh;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   text-align: center;
-  position: relative;
-  width: 100vw;
-  height: 100vh;
-
-  background-image: url("../images/Background.gif");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+}
+#start-bg-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1;
+  opacity: 0.7;
 }
 
 /* glowing title */
@@ -109,46 +113,85 @@ body {
   z-index: -1;
 }
 
-/* =======================
-   AVATARS (players)
-   ======================= */
+/* =========================
+   ANGEL AVATAR PLAYERS
+   ========================= */
 
-/* base size/position for both */
+/* Players dont go off-screen */
+#game-container {
+  position: relative;
+}
+
+/* Shared player look */
 #avatar-player,
 #avatar-hidden {
   position: absolute;
-
-  /* a little taller looks more ghost-like */
-  width: 40px;
-  height: 55px;
+  left: 0;
+  top: 0;
+  width: 380px;
+  height: 130px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  pointer-events: none;
+  z-index: 10;
 }
 
-/* player 2 starts hidden (your JS fades it in) */
+#avatar-player,
 #avatar-hidden {
-  opacity: 0;
-  transition: opacity 0.4s ease;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 380px;
+  height: 130px;
+
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  pointer-events: none;
+  z-index: 10;
 }
 
-/* class that gives the float animation */
-.player {
-  /* no need to repeat position/size here since IDs already handle it */
-  animation: floaty 2.2s ease-in-out infinite;
+/* Glowing aura effect */
+#avatar-player::after,
+#avatar-hidden::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 320px;
+  height: 320px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.35) 0%,
+    rgba(255, 255, 255, 0.206) 40%,
+    rgba(255, 255, 255, 0.05) 60%,
+    transparent 80%
+  );
+  z-index: -1;
+  pointer-events: none;
 }
 
-/* float animation */
-@keyframes floaty {
-  0% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-5px);
-  }
-  100% {
-    transform: translateY(0);
-  }
+/* Player 1 */
+#avatar-player {
+  background-image: url("../images/Player1.gif");
 }
 
-/* extra glow when met */
-.player.met {
-  filter: brightness(1.15) drop-shadow(0 0 16px rgba(255, 255, 255, 0.9));
+/* Player 2 */
+#avatar-hidden {
+  background-image: url("../images/Player2.gif");
+  opacity: 0.85;
+  filter: drop-shadow(0 0 16px rgba(2, 235, 235, 0.638));
+}
+#avatar-player.met,
+#avatar-hidden.met {
+  opacity: 1;
+  filter: drop-shadow(0 0 22px rgba(255, 255, 255, 0.35));
+}
+
+#avatar-player.lost,
+#avatar-hidden.lost {
+  opacity: 0.8;
 }
