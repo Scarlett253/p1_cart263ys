@@ -3,6 +3,7 @@ let startBtn = document.getElementById("start-btn");
 let startScreen = document.getElementById("start-screen");
 let gameContainer = document.getElementById("game-container");
 let ui = document.getElementById("ui");
+let pulse = document.getElementById("pulse");
 
 let player = document.getElementById("avatar-player"); // Player 1
 let hidden = document.getElementById("avatar-hidden"); // Player 2
@@ -221,6 +222,24 @@ function loseGame() {
 
   document.removeEventListener("keydown", handleKeyDown);
 }
+
+/** Random movement for player 2 every 6 seconds (only after player 1 moves) */
+setInterval(function () {
+  if (!gameOver && movedYet) {
+    p2.x = Math.random() * (window.innerWidth - SIZE_W);
+    p2.y = Math.random() * (window.innerHeight - SIZE_H);
+
+    updatePositions();
+
+    // move pulse to teleport location
+    pulse.style.left = p2.x + SIZE_W / 2 + "px";
+    pulse.style.top = p2.y + SIZE_H / 2 + "px";
+
+    pulse.classList.remove("show");
+    void pulse.offsetWidth; // restarts animation
+    pulse.classList.add("show");
+  }
+}, 6000);
 
 /** Restart */
 restartButton.addEventListener("click", function () {

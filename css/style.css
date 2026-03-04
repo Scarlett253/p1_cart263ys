@@ -267,3 +267,44 @@ body {
 #avatar-hidden.lost {
   opacity: 0.8;
 }
+
+/* pulse effect */
+#pulse {
+  position: absolute;
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+
+  pointer-events: none;
+  opacity: 0;
+  background: radial-gradient(
+    circle,
+    rgba(2, 235, 235, 0.8) 0%,
+    rgba(2, 235, 235, 0.35) 35%,
+    rgba(2, 235, 235, 0.15) 55%,
+    transparent 75%
+  );
+
+  transform: translate(-50%, -50%) scale(0.3);
+}
+
+#pulse.show {
+  animation: pulseReveal 1.2s ease-out forwards;
+}
+
+/* pulse animation for cool effect */
+@keyframes pulseReveal {
+  0% {
+    opacity: 0.9;
+    transform: translate(-50%, -50%) scale(0.2);
+  }
+
+  70% {
+    opacity: 0.6;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(2.5);
+  }
+}
