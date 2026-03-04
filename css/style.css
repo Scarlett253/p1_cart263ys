@@ -6,6 +6,10 @@ body {
   font-family: Arial, sans-serif;
 }
 
+#restart-btn {
+  display: none;
+}
+
 /* title screen layout */
 #start-screen {
   position: relative;
@@ -130,21 +134,6 @@ body {
   top: 0;
   width: 380px;
   height: 130px;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: contain;
-  pointer-events: none;
-  z-index: 10;
-}
-
-#avatar-player,
-#avatar-hidden {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 380px;
-  height: 130px;
-
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
