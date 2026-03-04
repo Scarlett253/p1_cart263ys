@@ -4,8 +4,8 @@ let startScreen = document.getElementById("start-screen");
 let gameContainer = document.getElementById("game-container");
 let ui = document.getElementById("ui");
 
-let player = document.getElementById("avatar-player"); // Player 1 (white angel)
-let hidden = document.getElementById("avatar-hidden"); // Player 2 (cyan angel)
+let player = document.getElementById("avatar-player"); // Player 1
+let hidden = document.getElementById("avatar-hidden"); // Player 2
 
 let message = document.getElementById("message");
 let timerDisplay = document.getElementById("timer");
@@ -203,16 +203,18 @@ function winGame() {
   gameOver = true;
   hidden.style.opacity = 1;
   message.textContent = "I see you.";
-  restartButton.style.display = "inline";
-  clearInterval(timer);
 
+  // reveal the restart button using the same class mechanism as loseGame
+  restartButton.classList.add("show");
+
+  clearInterval(timer);
   document.removeEventListener("keydown", handleKeyDown);
 }
 
 function loseGame() {
   gameOver = true;
   message.textContent = "You never found me.";
-  restartButton.style.display = "inline";
+  restartButton.classList.add("show");
   clearInterval(timer);
 
   document.removeEventListener("keydown", handleKeyDown);
