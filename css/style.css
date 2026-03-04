@@ -1,9 +1,15 @@
+@font-face {
+  font-family: "lowerresolution";
+  src: url("../fonts/LowerResolution.ttf") format("truetype");
+}
+
 body {
   overflow: hidden;
+  text-transform: uppercase;
   margin: 0;
   background-color: black;
   color: white;
-  font-family: Arial, sans-serif;
+  font-family: "lowerresolution", Arial, sans-serif;
 }
 
 #restart-btn {
@@ -12,6 +18,8 @@ body {
 
 /* title screen layout */
 #start-screen {
+  padding-top: 60px;
+  box-sizing: border-box;
   position: relative;
   width: 100vw;
   height: 100vh;
@@ -35,11 +43,12 @@ body {
 
 /* glowing title */
 #game-title {
+  letter-spacing: 10px;
   font-size: 94px;
   padding-bottom: 100px;
   text-shadow:
-    0 0 10px white,
-    0 0 20px white;
+    0 0 4px white,
+    0 0 8px rgba(255, 255, 255, 0.6);
 }
 
 /* glowing instructions */
@@ -48,6 +57,19 @@ body {
   margin-top: 20px;
   margin-bottom: 20px;
   line-height: 1.6;
+}
+
+#subtitle {
+  font-size: 28px;
+  letter-spacing: 2px;
+  margin-top: -60px;
+  margin-bottom: 40px;
+
+  text-shadow:
+    0 0 6px white,
+    0 0 14px rgba(255, 255, 255, 0.6);
+
+  opacity: 0.9;
 }
 
 /* glowing credits */
