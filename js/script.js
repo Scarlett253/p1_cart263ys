@@ -6,7 +6,8 @@ let ui = document.getElementById("ui");
 
 let player = document.getElementById("avatar-player"); // Player 1
 let hidden = document.getElementById("avatar-hidden"); // Player 2
-
+let bgMusic = document.getElementById("bg-music");
+bgMusic.volume = 0.45;
 let message = document.getElementById("message");
 let timerDisplay = document.getElementById("timer");
 let restartButton = document.getElementById("restart-btn");
@@ -31,6 +32,7 @@ startBtn.addEventListener("click", function () {
   startScreen.style.display = "none";
   gameContainer.style.display = "block";
   ui.style.display = "block";
+  bgMusic.play();
 
   message.style.opacity = "0";
   setTimeout(function () {
