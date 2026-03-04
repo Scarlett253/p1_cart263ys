@@ -30,6 +30,7 @@ body {
   align-items: center;
   text-align: center;
 }
+
 #start-bg-video {
   position: absolute;
   top: 0;
@@ -41,38 +42,44 @@ body {
   opacity: 0.7;
 }
 
-/* glowing title */
+/* GAME TITLE */
 #game-title {
   letter-spacing: 10px;
   font-size: 94px;
-  padding-bottom: 100px;
+  margin: 0;
+  margin-bottom: 15px;
+
   text-shadow:
     0 0 4px white,
     0 0 8px rgba(255, 255, 255, 0.6);
 }
 
-/* glowing instructions */
-#instructions {
-  text-shadow: 0 0 6px white;
-  margin-top: 20px;
-  margin-bottom: 20px;
-  line-height: 1.6;
-}
-
+/* SUBTITLE */
 #subtitle {
-  font-size: 28px;
-  letter-spacing: 2px;
-  margin-top: -60px;
-  margin-bottom: 40px;
+  font-size: 36px;
+  letter-spacing: 3px;
+
+  margin: 0;
+  margin-bottom: 18px;
 
   text-shadow:
-    0 0 6px white,
-    0 0 14px rgba(255, 255, 255, 0.6);
+    0 0 4px white,
+    0 0 10px rgba(255, 255, 255, 0.45);
 
-  opacity: 0.9;
+  opacity: 0.95;
 }
 
-/* glowing credits */
+/* PLAYER INSTRUCTIONS */
+#instructions {
+  text-shadow: 0 0 6px rgba(255, 255, 255, 0.6);
+  line-height: 1.6;
+
+  margin: 0;
+  margin-top: 4px;
+  margin-bottom: 30px;
+}
+
+/* credits */
 #credits {
   position: absolute;
   bottom: 20px;
@@ -80,10 +87,24 @@ body {
   opacity: 0.8;
 }
 
+/* moon start button */
 #start-btn {
-  margin-top: 10px;
+  width: 280px;
+  margin-top: 30px;
+  cursor: pointer;
+  position: relative;
+
+  transition:
+    transform 0.3s ease,
+    filter 0.3s ease;
 }
 
+#start-btn:hover {
+  transform: scale(1.1);
+  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.4));
+}
+
+/* game area */
 #game-container {
   position: relative;
   width: 100vw;
@@ -113,6 +134,7 @@ body {
     0 0 5px rgb(255, 255, 255),
     0 0 15px white,
     0 0 30px rgba(255, 255, 255, 0.395);
+
   animation: float 3.5s infinite alternate ease-in-out;
 
   opacity: 0;
@@ -143,12 +165,6 @@ body {
    ANGEL AVATAR PLAYERS
    ========================= */
 
-/* Players dont go off-screen */
-#game-container {
-  position: relative;
-}
-
-/* Shared player look */
 #avatar-player,
 #avatar-hidden {
   position: absolute;
@@ -163,7 +179,7 @@ body {
   z-index: 10;
 }
 
-/* Glowing aura effect */
+/* glowing aura */
 #avatar-player::after,
 #avatar-hidden::after {
   content: "";
@@ -174,6 +190,7 @@ body {
   height: 320px;
   transform: translate(-50%, -50%);
   border-radius: 50%;
+
   background: radial-gradient(
     circle,
     rgba(255, 255, 255, 0.35) 0%,
@@ -181,6 +198,7 @@ body {
     rgba(255, 255, 255, 0.05) 60%,
     transparent 80%
   );
+
   z-index: -1;
   pointer-events: none;
 }
@@ -196,6 +214,7 @@ body {
   opacity: 0.85;
   filter: drop-shadow(0 0 16px rgba(2, 235, 235, 0.638));
 }
+
 #avatar-player.met,
 #avatar-hidden.met {
   opacity: 1;
